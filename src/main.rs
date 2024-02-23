@@ -82,7 +82,7 @@ impl Render for RenderCounter {
             });
 
         let decrement_button = div()
-            .bg(rgb(0x4caf50))
+            .bg(rgb(0x660033))
             .text_color(rgb(0xffffff))
             .child("Decrement")
             .on_mouse_down(MouseButton::Left, move |_event, cx| {
@@ -100,7 +100,7 @@ impl Render for RenderCounter {
 
         div()
             .flex()
-            .bg(rgb(0x2e7d32))
+            .bg(rgb(0x333300))
             .size_full()
             .justify_center()
             .items_center()
@@ -110,7 +110,7 @@ impl Render for RenderCounter {
                             increment_button,
                             decrement_button,
                             div()
-                                .bg(rgb(0x4caf50))
+                                .bg(rgb(0x000000))
                                 .text_color(rgb(0xffffff))
                                 .child(
                                     format!("The number is: {}!", counter_ref.count.to_string())
