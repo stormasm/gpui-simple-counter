@@ -64,7 +64,7 @@ impl Render for RenderCounter {
         std::dbg!("Rendering counter view");
         let counter_ref = self.state.inner.read(cx);
 
-        let increment_button = div()
+        let increment_button_01 = div()
             .bg(rgb(0x4caf50))
             .text_color(rgb(0xffffff))
             .child("Increment")
@@ -81,7 +81,41 @@ impl Render for RenderCounter {
                 )
             });
 
-        let decrement_button = div()
+        let decrement_button_01 = div()
+            .bg(rgb(0x660033))
+            .text_color(rgb(0xffffff))
+            .child("Decrement")
+            .on_mouse_down(MouseButton::Left, move |_event, cx| {
+                std::dbg!("Decrementing counter");
+                CounterModel::update(
+                    |model, cx| {
+                        model.inner.update(cx, |model, cx| {
+                            model.count -= 1;
+                            cx.notify();
+                        });
+                    },
+                    cx,
+                )
+            });
+
+        let increment_button_02 = div()
+            .bg(rgb(0x4caf50))
+            .text_color(rgb(0xffffff))
+            .child("Increment")
+            .on_mouse_down(MouseButton::Left, move |_event, cx| {
+                std::dbg!("Incrementing counter");
+                CounterModel::update(
+                    |model, cx| {
+                        model.inner.update(cx, |model, cx| {
+                            model.count += 1;
+                            cx.notify();
+                        });
+                    },
+                    cx,
+                )
+            });
+
+        let decrement_button_02 = div()
             .bg(rgb(0x660033))
             .text_color(rgb(0xffffff))
             .child("Decrement")
@@ -107,8 +141,18 @@ impl Render for RenderCounter {
             .text_xl()
             .text_color(rgb(0xffffff))
             .child(div().flex().flex_col().children(vec![
-                            increment_button,
-                            decrement_button,
+                            increment_button_01,
+                            decrement_button_01,
+                            div()
+                                .bg(rgb(0x000000))
+                                .text_color(rgb(0xffffff))
+                                .child(
+                                    format!("The number is: {}!", counter_ref.count.to_string())
+                                ),
+                        ]))
+            .child(div().flex().flex_col().children(vec![
+                            increment_button_02,
+                            decrement_button_02,
                             div()
                                 .bg(rgb(0x000000))
                                 .text_color(rgb(0xffffff))
