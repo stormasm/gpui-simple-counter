@@ -1,6 +1,10 @@
 use gpui::*;
 
-pub struct Counter {
+pub struct Counter01 {
+    count: i32,
+}
+
+pub struct Counter02 {
     count: i32,
 }
 
@@ -8,13 +12,15 @@ impl Global for CounterModel {}
 
 #[derive(Clone)]
 pub struct CounterModel {
-    pub inner: Model<Counter>,
+    pub inner01: Model<Counter01>,
+    pub inner02: Model<Counter02>,
 }
 
 impl CounterModel {
     pub fn init(cx: &mut WindowContext) -> Self {
         let this = Self {
-            inner: cx.new_model(|_| Counter { count: 0 }),
+            inner01: cx.new_model(|_| Counter01 { count: 0 }),
+            inner02: cx.new_model(|_| Counter02 { count: 0 }),
         };
         cx.set_global(this.clone());
         this
@@ -62,7 +68,7 @@ impl RenderCounter {
 impl Render for RenderCounter {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
         std::dbg!("Rendering counter view");
-        let counter_ref = self.state.inner.read(cx);
+        let counter_ref = self.state.inner01.read(cx);
 
         let increment_button_01 = div()
             .bg(rgb(0x4caf50))
@@ -72,7 +78,7 @@ impl Render for RenderCounter {
                 std::dbg!("Incrementing counter");
                 CounterModel::update(
                     |model, cx| {
-                        model.inner.update(cx, |model, cx| {
+                        model.inner01.update(cx, |model, cx| {
                             model.count += 1;
                             cx.notify();
                         });
@@ -89,7 +95,7 @@ impl Render for RenderCounter {
                 std::dbg!("Decrementing counter");
                 CounterModel::update(
                     |model, cx| {
-                        model.inner.update(cx, |model, cx| {
+                        model.inner01.update(cx, |model, cx| {
                             model.count -= 1;
                             cx.notify();
                         });
@@ -106,7 +112,7 @@ impl Render for RenderCounter {
                 std::dbg!("Incrementing counter");
                 CounterModel::update(
                     |model, cx| {
-                        model.inner.update(cx, |model, cx| {
+                        model.inner02.update(cx, |model, cx| {
                             model.count += 1;
                             cx.notify();
                         });
@@ -123,7 +129,7 @@ impl Render for RenderCounter {
                 std::dbg!("Decrementing counter");
                 CounterModel::update(
                     |model, cx| {
-                        model.inner.update(cx, |model, cx| {
+                        model.inner02.update(cx, |model, cx| {
                             model.count -= 1;
                             cx.notify();
                         });
