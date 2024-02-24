@@ -68,7 +68,8 @@ impl RenderCounter {
 impl Render for RenderCounter {
     fn render(&mut self, cx: &mut ViewContext<Self>) -> impl IntoElement {
         std::dbg!("Rendering counter view");
-        let counter_ref = self.state.inner01.read(cx);
+        let counter_ref_01 = self.state.inner01.read(cx);
+        let counter_ref_02 = self.state.inner02.read(cx);
 
         let increment_button_01 = div()
             .bg(rgb(0x4caf50))
@@ -158,7 +159,7 @@ impl Render for RenderCounter {
                                 .bg(rgb(0x000000))
                                 .text_color(rgb(0xffffff))
                                 .child(
-                                    format!("The number is: {}!", counter_ref.count.to_string())
+                                    format!("The number is: {}!", counter_ref_01.count.to_string())
                                 ),
                         ])),
             )
@@ -170,7 +171,7 @@ impl Render for RenderCounter {
                                 .bg(rgb(0x000000))
                                 .text_color(rgb(0xffffff))
                                 .child(
-                                    format!("The number is: {}!", counter_ref.count.to_string())
+                                    format!("The number is: {}!", counter_ref_02.count.to_string())
                                 ),
                         ]))
     }
