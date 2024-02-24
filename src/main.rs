@@ -133,14 +133,19 @@ impl Render for RenderCounter {
             });
 
         div()
-            .flex()
-            .bg(rgb(0x333300))
-            .size_full()
-            .justify_center()
-            .items_center()
-            .text_xl()
-            .text_color(rgb(0xffffff))
-            .child(div().flex().flex_col().children(vec![
+            .flex_row()
+            .child(
+                div()
+                    .child(div())
+                    .bg(rgb(0x333300))
+                    .size_full()
+                    .justify_center()
+                    .items_center()
+                    .text_xl()
+                    .text_color(rgb(0xffffff))
+                    .child(div())
+                    .flex()
+                    .child(div().flex().flex_col().children(vec![
                             increment_button_01,
                             decrement_button_01,
                             div()
@@ -149,7 +154,9 @@ impl Render for RenderCounter {
                                 .child(
                                     format!("The number is: {}!", counter_ref.count.to_string())
                                 ),
-                        ]))
+                        ])),
+            )
+            .flex_row()
             .child(div().flex().flex_col().children(vec![
                             increment_button_02,
                             decrement_button_02,
