@@ -140,7 +140,6 @@ impl Render for RenderCounter {
             });
 
         div()
-            .flex_row()
             .child(
                 div()
                     .child(div())
@@ -163,7 +162,6 @@ impl Render for RenderCounter {
                                 ),
                         ])),
             )
-            .flex_row()
             .child(div().flex().flex_col().children(vec![
                             increment_button_02,
                             decrement_button_02,
