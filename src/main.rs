@@ -30,7 +30,19 @@ actions!(counter, [Quit]);
 
 fn main() {
     App::new().run(|cx: &mut AppContext| {
+        cx.activate(true);
+        cx.on_action(|_: &Quit, cx| cx.quit());
+        cx.bind_keys([KeyBinding::new("cmd-q", Quit, None)]);
+
+        let bounds = Bounds::centered(None, size(px(1000.0), px(500.0)), cx);
+
         cx.open_window(
+            WindowOptions {
+                window_bounds: Some(WindowBounds::Windowed(bounds)),
+                ..Default::default()
+            },
+            /*
+            old code:
             WindowOptions {
                 bounds: WindowBounds::Fixed(Bounds {
                     origin: Default::default(),
@@ -38,15 +50,14 @@ fn main() {
                 }),
                 ..Default::default()
             },
+            */
             |cx| {
                 let view = RenderCounter::build(cx);
                 view
             },
-        );
-        cx.activate(true);
-        cx.on_action(|_: &Quit, cx| cx.quit());
-        cx.bind_keys([KeyBinding::new("cmd-q", Quit, None)]);
-    })
+        )
+        .unwrap();
+    });
 }
 
 pub struct RenderCounter {
